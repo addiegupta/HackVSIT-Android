@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements QueryUtils.QueryU
 
     private CameraSource mCameraSource;
     private static final String SHARED_PREFS_KEY = "shared_prefs";
+    private boolean requestSent=false;
 
     @BindView(R.id.tv_barcode_data)
     TextView mBarcodeDataTextView;
@@ -86,7 +87,8 @@ public class MainActivity extends AppCompatActivity implements QueryUtils.QueryU
                                   public void receiveDetections(Detector.Detections<Barcode> detections) {
                                       final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
-                                      if (barcodes.size() != 0) {
+                                      if (barcodes.size() != 0 && !requestSent) {
+                                          requestSent = true;
                                           String id = barcodes.valueAt(0).rawValue;
                                           RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                                           QueryUtils.postHttpRequest(queue, id, MainActivity.this);

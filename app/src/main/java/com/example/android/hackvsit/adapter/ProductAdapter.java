@@ -2,6 +2,7 @@ package com.example.android.hackvsit.adapter;
 
 
 import android.content.Context;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,7 +70,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             //TODO Check requirement of this line
             //else holder.mProductImageView.setImageResource(R.drawable.R.drawable.placeholder_cart);
 
-//            ViewCompat.setTransitionName(holder.mProductImageView, name);
+            ViewCompat.setTransitionName(holder.mProductImageView, name);
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -89,7 +90,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
-        @BindView(R.id.tv_product_name)
+        @BindView(R.id.tv_nutrition_label)
         TextView mNameTextView;
         @BindView(R.id.tv_product_price)
         TextView mPriceTextView;

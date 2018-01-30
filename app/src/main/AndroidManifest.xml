@@ -18,6 +18,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.MainActivity" />
+
+        <provider
+            android:name=".data.generated.ProductProvider"
+            android:authorities="${applicationId}"
+            android:exported="false" />
+
         <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +31,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MachineActivity"></activity>
+        <activity android:name=".ui.MachineActivity" />
+        <activity
+            android:name=".ui.ProductActivity"
+            android:theme="@style/NoActionBarTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.hackvsit.ui.ProductActivity" />
+        </activity>
+        <activity android:name=".ui.CartActivity"></activity>
     </application>
 
 </manifest>

@@ -12,6 +12,14 @@ public class Product implements Parcelable {
     public Product() {
     }
 
+    public Product(String mName, String mImageUrl, int mQuantity, int mPrice,int mMaxQuantity) {
+        this.mName = mName;
+        this.mImageUrl = mImageUrl;
+        this.mQuantity = mQuantity;
+        this.mMaxQuantity = mMaxQuantity;
+        this.mPrice = mPrice;
+    }
+
     public Product(String mName, int mId, String mImageUrl, int mQuantity, int mMaxQuantity, int mPrice, Nutrition mNutrition) {
         this.mName = mName;
         this.mId = mId;

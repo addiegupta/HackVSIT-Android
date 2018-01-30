@@ -23,7 +23,7 @@
         app:srcCompat="@drawable/placeholder_cart" />
 
     <TextView
-        android:id="@+id/tv_product_name"
+        android:id="@+id/tv_nutrition_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"
@@ -45,10 +45,10 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_product_name"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_nutrition_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_product_name" />
+        app:layout_constraintTop_toTopOf="@+id/tv_nutrition_label" />
 
     <TextView
         android:id="@+id/tv_product_quantity"

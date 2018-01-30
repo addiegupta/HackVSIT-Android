@@ -2,18 +2,20 @@ package com.example.android.hackvsit.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.example.android.hackvsit.R;
 import com.example.android.hackvsit.adapter.ProductAdapter;
 import com.example.android.hackvsit.model.Machine;
 import com.example.android.hackvsit.model.Product;
-import com.example.android.hackvsit.utils.Tools;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,13 +25,13 @@ public class MachineActivity extends AppCompatActivity implements ProductAdapter
 
     private Machine mMachine;
     private String MACHINE = "machine";
+    private String PRODUCT = "product";
+
+    private static final String EXTRA_IMAGE_TRANSITION = "image_transition";
     private ProductAdapter mAdapter;
 
     @BindView(R.id.products_recycler_view)
     RecyclerView mRecyclerView;
-    @BindView(R.id.button_buy_products)
-    Button mBuyButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +56,42 @@ public class MachineActivity extends AppCompatActivity implements ProductAdapter
 
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_machine,menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch(id){
+            case R.id.menu_action_cart:
+                Intent intent = new Intent(MachineActivity.this,CartActivity.class);
+                intent.putExtra(MACHINE,mMachine);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
+
+        return true;
+    }
+
+    @Override
     public void onClick(Product selectedProduct, ImageView imageView) {
-        Timber.d("Selected product is :" + selectedProduct.getmName());
-        Tools.toast(this,"Selected product is : " + selectedProduct.getmName());
+
+        Intent intent = new Intent(MachineActivity.this,ProductActivity.class);
+        String imageTransitionName = ViewCompat.getTransitionName(imageView);
+        intent.putExtra(PRODUCT,selectedProduct);
+        intent.putExtra(EXTRA_IMAGE_TRANSITION, imageTransitionName);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, imageView,
+                imageTransitionName);
+
+        startActivity(intent, options.toBundle());
+
+
 
     }
 }
