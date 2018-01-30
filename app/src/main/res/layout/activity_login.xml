@@ -16,6 +16,7 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
@@ -27,6 +28,7 @@
         <LinearLayout
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -66,17 +68,19 @@
 
             <Button
                 android:id="@+id/sign_in_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorAccent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
             <Button
                 android:id="@+id/otp_sign_in_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
                 android:layout_marginTop="16dp"
                 android:visibility="gone"
                 android:text="@string/submit"

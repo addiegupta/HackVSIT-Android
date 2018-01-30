@@ -2,7 +2,9 @@ package com.example.android.hackvsit.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -44,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
+
+    private static final String SHARED_PREFS_KEY = "shared_prefs";
     private FirebaseAuth mAuth;
 
 
@@ -62,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
     View mLoginFormView;
     @BindView(R.id.login_progress)
     View mProgressView;
+    private String AUTH_ID="auth_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +78,12 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-
         if (mAuth.getCurrentUser() != null) {
+            SharedPreferences prefs = getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
+            if (!prefs.contains(AUTH_ID)){
+                prefs.edit().putString(AUTH_ID, mAuth.getCurrentUser().getPhoneNumber()).apply();
+            }
+
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }

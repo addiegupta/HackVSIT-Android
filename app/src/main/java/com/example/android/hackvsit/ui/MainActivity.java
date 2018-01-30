@@ -1,5 +1,6 @@
 package com.example.android.hackvsit.ui;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.android.hackvsit.R;
+import com.example.android.hackvsit.model.Machine;
 import com.example.android.hackvsit.utils.QueryUtils;
 import com.example.android.hackvsit.utils.Tools;
 import com.google.android.gms.vision.CameraSource;
@@ -27,16 +29,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements QueryUtils.QueryUtilsCallback{
 
 
     private CameraSource mCameraSource;
+    private static final String SHARED_PREFS_KEY = "shared_prefs";
 
     @BindView(R.id.tv_barcode_data)
     TextView mBarcodeDataTextView;
     @BindView(R.id.camera_view)
     SurfaceView mCameraView;
+    private String MACHINE= "machine";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
 
         BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE).build();
@@ -54,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         mCameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                if(Tools.checkPermission(MainActivity.this)){
+                if (Tools.checkPermission(MainActivity.this)) {
                     startCamera();
                 }
             }
@@ -69,26 +73,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
-                                         @Override
-                                         public void release() {
+        barcodeDetector
+                .setProcessor(new Detector.Processor<Barcode>() {
+                                  @Override
+                                  public void release() {
 
-                                         }
+                                  }
 
-                                         @Override
-                                         public void receiveDetections(Detector.Detections<Barcode> detections) {
-                                             final SparseArray<Barcode> barcodes = detections.getDetectedItems();
+                                  @Override
+                                  public void receiveDetections(Detector.Detections<Barcode> detections) {
+                                      final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
-                                             if (barcodes.size() != 0) {
-                                                 String id = barcodes.valueAt(0).rawValue;
-                                                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                                                 QueryUtils.postHttpRequest(queue,id);
-                                             }
-                                         }
-                                     }
-        );
+                                      if (barcodes.size() != 0) {
+                                          String id = barcodes.valueAt(0).rawValue;
+                                          RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                                          QueryUtils.postHttpRequest(queue, id,MainActivity.this);
+                                          mCameraSource.stop();
+                                      }
+                                  }
+                              }
+                );
     }
-
 
 
     @Override
@@ -101,23 +106,30 @@ public class MainActivity extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startCamera();
                 } else {
-                    Tools.toast(this,"Camera is needed for the app to function");
+                    Tools.toast(this, "Camera is needed for the app to function");
                     finish();
                 }
             }
         }
     }
 
-    private void startCamera(){
+    private void startCamera() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
             //ask for authorisation
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, 50);
-        else{
+        else {
             try {
                 mCameraSource.start(mCameraView.getHolder());
             } catch (IOException ie) {
                 Timber.e(ie.getMessage());
             }
         }
+    }
+
+    @Override
+    public void setupMachine(Machine machine) {
+        Intent intent = new Intent(MainActivity.this,MachineActivity.class);
+        intent.putExtra(MACHINE,machine);
+        startActivity(intent);
     }
 }
