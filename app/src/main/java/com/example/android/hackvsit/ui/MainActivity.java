@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements QueryUtils.QueryU
                                           requestSent = true;
                                           String id = barcodes.valueAt(0).rawValue;
                                           RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                                          QueryUtils.postHttpRequest(queue, id, MainActivity.this);
+                                          QueryUtils.fetchMachineData(queue, id, MainActivity.this);
                                           mCameraView.setVisibility(View.GONE);
                                           mCameraSource.stop();
                                       }
@@ -137,5 +137,10 @@ public class MainActivity extends AppCompatActivity implements QueryUtils.QueryU
         intent.putExtra(MACHINE, machine);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void launchPayPortal() {
+
     }
 }

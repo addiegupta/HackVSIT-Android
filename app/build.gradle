@@ -51,7 +51,13 @@ dependencies {
     compile 'net.simonvt.schematic:schematic:0.7.0'
     annotationProcessor 'net.simonvt.schematic:schematic-compiler:0.7.0'
 
+
+
+    compile 'com.github.aitorvs.fingerlock:core:1.0.0'
+    compile 'com.github.aitorvs.fingerlock:dialog:1.0.0'
+
 }
+
 
 
 

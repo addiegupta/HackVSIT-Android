@@ -2,23 +2,30 @@ package com.example.android.hackvsit.adapter;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.android.hackvsit.R;
+import com.example.android.hackvsit.data.ProductColumns;
 import com.example.android.hackvsit.model.Product;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.view.View.GONE;
+import static com.example.android.hackvsit.data.ProductProvider.Products.URI_PRODUCTS;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
@@ -38,11 +45,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        String name,imageUrl,price,quantity;
+        String name, imageUrl, price, quantity;
         try {
             Product currentProduct = mProductsList.get(position);
             name = currentProduct.getmName();
-            price = "\u20B9 " + String.valueOf(currentProduct.getmPrice()*currentProduct.getmQuantity());
+            price = "\u20B9 " + String.valueOf(currentProduct.getmPrice() * currentProduct.getmQuantity());
             quantity = String.valueOf(currentProduct.getmQuantity());
             imageUrl = currentProduct.getmImageUrl();
 
@@ -70,7 +77,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         } catch (Exception e) {
 
             e.printStackTrace();
-            holder.itemView.setVisibility(View.GONE);
+            holder.itemView.setVisibility(GONE);
         }
     }
 
@@ -95,7 +102,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         Button mMinusButton;
         @BindView(R.id.button_cart_quantity_plus)
         Button mPlusButton;
-
+        @BindView(R.id.button_cart_delete)
+        ImageButton mDeleteButton;
 
 
         ItemViewHolder(View itemView) {
@@ -107,10 +115,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                     int adapterPosition = getAdapterPosition();
                     Product product = mProductsList.get(adapterPosition);
                     int quantity = Integer.parseInt(mQuantityTextView.getText().toString());
-                    if(quantity!=1){
-                        mQuantityTextView.setText(String.valueOf(quantity-1));
-                        mProductsList.get(adapterPosition).setmQuantity(quantity-1);
-                        int price = product.getmPrice() * (quantity-1);
+                    if (quantity != 1) {
+                        mQuantityTextView.setText(String.valueOf(quantity - 1));
+                        mProductsList.get(adapterPosition).setmQuantity(quantity - 1);
+                        int price = product.getmPrice() * (quantity - 1);
                         mPriceTextView.setText("\u20B9 " + String.valueOf(price));
                     }
                 }
@@ -123,16 +131,48 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
                     int quantity = Integer.parseInt(mQuantityTextView.getText().toString());
                     int maxQuantity = product.getmMaxQuantity();
-                    if(quantity!=maxQuantity){
-                        mQuantityTextView.setText(String.valueOf(quantity+1));
-                        mProductsList.get(adapterPosition).setmQuantity(quantity+1);
-                        int price = product.getmPrice() * (quantity+1);
+                    if (quantity != maxQuantity) {
+                        mQuantityTextView.setText(String.valueOf(quantity + 1));
+                        mProductsList.get(adapterPosition).setmQuantity(quantity + 1);
+                        int price = product.getmPrice() * (quantity + 1);
                         mPriceTextView.setText("\u20B9 " + String.valueOf(price));
                     }
                 }
             });
+            mDeleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int adapterPosition = getAdapterPosition();
+                    int id = mProductsList.get(adapterPosition).getmId();
+                    showDeleteDialog(String.valueOf(id));
+                }
+            });
         }
 
+        private void showDeleteDialog(final String productId) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setTitle(R.string.delete_confirm)
+                    .setCancelable(false)
+                    .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            URI_PRODUCTS.buildUpon().appendPath(productId).build();
+                            String selection = ProductColumns._ID + "=?";
+                            String[] selectionArgs = {productId};
+                            mContext.getContentResolver().delete(URI_PRODUCTS, selection, selectionArgs);
+                            notifyDataSetChanged();
+                            itemView.setVisibility(GONE);
+                            dialog.dismiss();
+
+
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            builder.create().show();
+        }
     }
 
     public void setListData(ArrayList<Product> list) {

@@ -4,11 +4,7 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
         android:allowBackup="true"
@@ -39,7 +35,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.hackvsit.ui.ProductActivity" />
         </activity>
-        <activity android:name=".ui.CartActivity"></activity>
+        <activity android:name=".ui.CartActivity" />
+        <activity android:name=".ui.PayActivity"></activity>
     </application>
 
 </manifest>

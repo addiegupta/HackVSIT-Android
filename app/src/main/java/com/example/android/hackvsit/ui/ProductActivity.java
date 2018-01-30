@@ -70,6 +70,9 @@ public class ProductActivity extends AppCompatActivity {
 
     private String PRODUCT = "product";
 
+    private String AUTH_ID="auth_id";
+    private static final String SHARED_PREFS_KEY = "shared_prefs";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +121,25 @@ public class ProductActivity extends AppCompatActivity {
     }
 
     private void purchase(){
+//        boolean exists = false;
         int quantity = Integer.parseInt(mQuantityTextView.getText().toString());
+
+//        String selection = ProductColumns.ID + "=?";
+//        String[] selectionArgs = {String.valueOf(mProduct.getmId())};
+//        Cursor cursor = getContentResolver().query(URI_PRODUCTS,
+//                null,
+//                selection,
+//                selectionArgs, null);
+//
+//        if (cursor != null && cursor.getCount() != 0) {
+//            cursor.moveToFirst();
+//            exists = true;
+//            int existingquantity = cursor.getInt(cursor.getColumnIndexOrThrow(ProductColumns.QUANTITY));
+//            quantity += existingquantity;
+//        }
+//        if (cursor != null) {
+//            cursor.close();
+//        }
 
         ContentValues values = new ContentValues();
         values.put("id",mProduct.getmId());
@@ -127,10 +148,14 @@ public class ProductActivity extends AppCompatActivity {
         values.put("name",mProduct.getmName());
         values.put("price",mProduct.getmPrice());
         values.put("image",mProduct.getmImageUrl());
+//        if (exists){
+//         getContentResolver().update(URI_PRODUCTS,values,selection,selectionArgs);
+//        }
+//    else{
+            getContentResolver().insert(URI_PRODUCTS,values);
+//        }
 
-        getContentResolver().insert(URI_PRODUCTS,values);
-
-        Tools.toast(this,"Added to Cart");
+        Tools.toast(this,"Added "+quantity+" items to Cart");
         finish();
     }
     private void setTextViews(){
