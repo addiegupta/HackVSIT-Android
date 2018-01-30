@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">HackVSIT</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_number">Mobile Number</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_number">This number is invalid</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="enter_code">Enter Code</string>
+    <string name="submit">Submit</string>
+    <string name="invalid_otp">Invalid OTP</string>
 </resources>

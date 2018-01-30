@@ -1,7 +1,6 @@
 package com.example.android.hackvsit.ui;
 
 import android.content.pm.PackageManager;
-import android.example.com.hackvsit.R;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.android.hackvsit.R;
 import com.example.android.hackvsit.utils.QueryUtils;
 import com.example.android.hackvsit.utils.Tools;
 import com.google.android.gms.vision.CameraSource;
@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-        Timber.plant(new Timber.DebugTree());
 
         BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE).build();

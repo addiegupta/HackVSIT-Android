@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "343538556566",
+    "firebase_url": "https://hackvsit.firebaseio.com",
+    "project_id": "hackvsit",
+    "storage_bucket": "hackvsit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343538556566:android:8c52c771ef184043",
+        "android_client_info": {
+          "package_name": "com.example.android.hackvsit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343538556566-fqs3n25nl3cjtjetkp6ee6mcg0c78d4f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.hackvsit",
+            "certificate_hash": "da6ab1685c1eac8182e2d546afea4a8369a0f636"
+          }
+        },
+        {
+          "client_id": "343538556566-r3scr71lr7a280nq487atgvj183l5mv1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7uhYR5O_-dvsHGINGQhxfB2Oeq5l0Ix0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343538556566-r3scr71lr7a280nq487atgvj183l5mv1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
