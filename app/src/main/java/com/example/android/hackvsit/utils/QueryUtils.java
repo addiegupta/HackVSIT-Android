@@ -23,6 +23,7 @@ public final class QueryUtils {
     public static final String BASE_URL = "http://192.168.136.210:3000/api/getData";
     public static final String BASE_PAY_URL = "http://192.168.136.210:3000/api/transaction/";
 
+
     public static RequestQueue addVolleyHttpRequest(RequestQueue queue, boolean isGetRequest,
                                                     String volleyUrl, String id) {
         int requestMethod;

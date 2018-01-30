@@ -17,4 +17,5 @@
     <string name="add_to_cart">Add to Cart</string>
     <string name="proceed_to_pay">Proceed to Pay</string>
     <string name="delete_confirm">Remove from Cart?</string>
+    <string name="scan_qr">Scan the QR Code of a nearby Vending Machine</string>
 </resources>

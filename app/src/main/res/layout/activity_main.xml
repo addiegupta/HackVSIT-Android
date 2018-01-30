@@ -2,20 +2,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="8dp"
+        android:textAppearance="@style/Base.Widget.AppCompat.ActionBar.Solid"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:id="@+id/tv_scan_qr_label"
+        android:layout_alignParentTop="true"
+        android:text="@string/scan_qr"/>
 
     <SurfaceView
         android:id="@+id/camera_view"
-        android:layout_marginTop="16dp"
         android:layout_width="360dp"
+        android:layout_below="@+id/tv_scan_qr_label"
         android:layout_height="360dp"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:id="@+id/tv_barcode_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/camera_view"
-        android:layout_centerHorizontal="true"
-        tools:text="text" />
+    <ProgressBar
+        android:id="@+id/pb_main"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

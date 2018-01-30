@@ -31,10 +31,9 @@
 
         <TextView
             android:id="@+id/tv_cart_name"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_gravity="fill"
-            android:maxLength="9"
             android:layout_marginStart="13dp"
             android:layout_marginTop="32dp"
             android:layout_toEndOf="@+id/iv_cart_image"
@@ -93,7 +92,7 @@
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="46dp"
+            android:layout_marginStart="8dp"
             android:layout_toEndOf="@+id/tv_cart_name"
             android:text="-"
             android:textColor="@color/colorAccent"

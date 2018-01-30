@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.aitorvs.android.fingerlock.FingerprintDialog;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.view.View.GONE;
 import static com.example.android.hackvsit.data.ProductProvider.Products.URI_PRODUCTS;
 
 public class CartActivity extends AppCompatActivity implements FingerprintDialog.Callback ,QueryUtils.QueryUtilsCallback{
@@ -50,6 +52,8 @@ public class CartActivity extends AppCompatActivity implements FingerprintDialog
     RecyclerView mRecyclerView;
     @BindView(R.id.button_payment)
     Button mPayButton;
+    @BindView(R.id.pb_loading_indicator)
+    ProgressBar mLoadingIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +118,7 @@ public class CartActivity extends AppCompatActivity implements FingerprintDialog
     @Override
     public void onFingerprintDialogAuthenticated() {
         Toast.makeText(this, "Verified", Toast.LENGTH_SHORT).show();
+        mLoadingIndicator.setVisibility(View.VISIBLE);
 
         makePayment();
     }
@@ -138,7 +143,8 @@ public class CartActivity extends AppCompatActivity implements FingerprintDialog
                     JSONObject object = new JSONObject();
                     int id = cursor.getInt(cursor.getColumnIndexOrThrow(ProductColumns.ID));
                     int quantity = cursor.getInt(cursor.getColumnIndexOrThrow(ProductColumns.QUANTITY));
-                    object.put(String.valueOf(id), String.valueOf(quantity));
+                    object.put("id", String.valueOf(id));
+                    object.put("quantity", String.valueOf(quantity));
                     array.put(object);
                     cursor.moveToNext();
                 }
@@ -152,7 +158,7 @@ public class CartActivity extends AppCompatActivity implements FingerprintDialog
             e.printStackTrace();
         }
         RequestQueue queue = Volley.newRequestQueue(this);
-        QueryUtils.makePayment(queue,mMachine.getmId(),parent,null);
+        QueryUtils.makePayment(queue,mMachine.getmId(),parent,this);
 
     }
 
@@ -174,6 +180,7 @@ public class CartActivity extends AppCompatActivity implements FingerprintDialog
 
     @Override
     public void launchPayPortal() {
+        mLoadingIndicator.setVisibility(GONE);
         startActivity(new Intent(CartActivity.this,PayActivity.class));
         finish();
     }

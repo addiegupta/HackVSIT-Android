@@ -8,11 +8,19 @@
         android:layout_width="match_parent"
         android:layout_margin="4dp"
         android:layout_alignParentTop="true"
-        android:layout_above="@+id/button_payment"
+        android:layout_above="@+id/pb_loading_indicator"
         android:layout_height="wrap_content"/>
+    <ProgressBar
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:id="@+id/pb_loading_indicator"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/button_payment"
+        android:visibility="gone"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         style="@style/Base.Widget.AppCompat.Button.Borderless"

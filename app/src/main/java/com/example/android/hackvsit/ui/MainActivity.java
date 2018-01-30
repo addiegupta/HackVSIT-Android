@@ -3,6 +3,8 @@ package com.example.android.hackvsit.ui;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -11,7 +13,7 @@ import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -30,15 +32,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
+import static android.view.View.GONE;
+
 public class MainActivity extends AppCompatActivity implements QueryUtils.QueryUtilsCallback {
 
 
     private CameraSource mCameraSource;
     private static final String SHARED_PREFS_KEY = "shared_prefs";
-    private boolean requestSent=false;
+    private boolean requestSent = false;
 
-    @BindView(R.id.tv_barcode_data)
-    TextView mBarcodeDataTextView;
+    @BindView(R.id.pb_main)
+    ProgressBar mLoadingIndicator;
     @BindView(R.id.camera_view)
     SurfaceView mCameraView;
     private String MACHINE = "machine";
@@ -89,10 +93,17 @@ public class MainActivity extends AppCompatActivity implements QueryUtils.QueryU
 
                                       if (barcodes.size() != 0 && !requestSent) {
                                           requestSent = true;
+                                          new Handler(Looper.getMainLooper()).post(new Runnable() {
+                                              @Override
+                                              public void run() {
+                                                  mLoadingIndicator.setVisibility(View.VISIBLE);
+                                                  Tools.toast(MainActivity.this, "QR Code recognised");
+                                              }
+                                          });
                                           String id = barcodes.valueAt(0).rawValue;
                                           RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                                           QueryUtils.fetchMachineData(queue, id, MainActivity.this);
-                                          mCameraView.setVisibility(View.GONE);
+                                          mCameraView.setVisibility(GONE);
                                           mCameraSource.stop();
                                       }
                                   }
@@ -135,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements QueryUtils.QueryU
     public void setupMachine(Machine machine) {
         Intent intent = new Intent(MainActivity.this, MachineActivity.class);
         intent.putExtra(MACHINE, machine);
+        mLoadingIndicator.setVisibility(GONE);
         startActivity(intent);
         finish();
     }
