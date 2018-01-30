@@ -29,6 +29,7 @@ public final class JSONUtils{
     private static final String CHOLESTEROL = "Cholesterol";
     private static final String IRON = "Iron";
     private static final String PROTEIN = "Protein";
+    private static final String PRICE = "Price";
 
 
     public static Machine getMachineDetails(String jsonResponse){
@@ -51,6 +52,7 @@ public final class JSONUtils{
                 product.setmMaxQuantity(productJson.getInt(MAX_QUANT));
                 product.setmQuantity(productJson.getInt(QUANT));
                 product.setmImageUrl(productJson.getString(IMAGE));
+                product.setmPrice(productJson.getInt(PRICE));
 
                 Nutrition nutrition = new Nutrition();
                 JSONObject nutritionJson = productJson.getJSONObject(NUTRITION_FACTS);
@@ -63,6 +65,7 @@ public final class JSONUtils{
                 product.setmNutrition(nutrition);
                 mProducts.add(product);
             }
+            machine.setmProducts(mProducts);
 
             return machine;
         }catch (JSONException e){

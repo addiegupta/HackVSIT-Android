@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -29,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity implements QueryUtils.QueryUtilsCallback{
+public class MainActivity extends AppCompatActivity implements QueryUtils.QueryUtilsCallback {
 
 
     private CameraSource mCameraSource;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements QueryUtils.QueryU
     TextView mBarcodeDataTextView;
     @BindView(R.id.camera_view)
     SurfaceView mCameraView;
-    private String MACHINE= "machine";
+    private String MACHINE = "machine";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements QueryUtils.QueryU
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
+
                 mCameraSource.stop();
             }
         });
@@ -87,7 +89,8 @@ public class MainActivity extends AppCompatActivity implements QueryUtils.QueryU
                                       if (barcodes.size() != 0) {
                                           String id = barcodes.valueAt(0).rawValue;
                                           RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                                          QueryUtils.postHttpRequest(queue, id,MainActivity.this);
+                                          QueryUtils.postHttpRequest(queue, id, MainActivity.this);
+                                          mCameraView.setVisibility(View.GONE);
                                           mCameraSource.stop();
                                       }
                                   }
@@ -128,8 +131,9 @@ public class MainActivity extends AppCompatActivity implements QueryUtils.QueryU
 
     @Override
     public void setupMachine(Machine machine) {
-        Intent intent = new Intent(MainActivity.this,MachineActivity.class);
-        intent.putExtra(MACHINE,machine);
+        Intent intent = new Intent(MainActivity.this, MachineActivity.class);
+        intent.putExtra(MACHINE, machine);
         startActivity(intent);
+        finish();
     }
 }
