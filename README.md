@@ -6,3 +6,8 @@ Android Application to Interact with Vending Machine having features like
 • Nutritional value of products
 • Machine learning algorithms to provide recommendations
 • Machine learning to identify objects etc
+
+Accompanying code
+https://github.com/pratyush1687/hackvsit
+
+https://github.com/edidamanish/VendingMachine
