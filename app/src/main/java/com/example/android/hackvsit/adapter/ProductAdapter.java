@@ -64,6 +64,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                         .into(holder.mProductImageView);
 
             }
+            if (currentProduct.ismIsRecommended()){
+                holder.mStarImageView.setVisibility(View.VISIBLE);
+            }else {
+                holder.mStarImageView.setVisibility(View.GONE);
+            }
 
             //TODO Check requirement of this line
             //else holder.mProductImageView.setImageResource(R.drawable.R.drawable.placeholder_cart);
@@ -94,6 +99,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         TextView mPriceTextView;
         @BindView(R.id.iv_product_image)
         ImageView mProductImageView;
+        @BindView(R.id.iv_product_star)
+        ImageView mStarImageView;
 
 
         ProductViewHolder(View itemView) {

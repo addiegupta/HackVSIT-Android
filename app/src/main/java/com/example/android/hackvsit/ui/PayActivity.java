@@ -27,12 +27,14 @@ public class PayActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-
+        String price = getIntent().getStringExtra("price");
+        String time = getIntent().getStringExtra("time");
+        String url = BASE_PORTAL_URL + "/?time=" +time+"&price="+price;
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
         mWebView.setWebViewClient(new MyWebViewClient());
-        mWebView.loadUrl(BASE_PORTAL_URL);
+        mWebView.loadUrl(url);
 
     }
 

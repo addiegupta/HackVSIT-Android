@@ -31,7 +31,9 @@ public final class Tools {
 
     private static void requestPermission(Context context) {
         ActivityCompat.requestPermissions((Activity) context,
-                new String[]{Manifest.permission.CAMERA},
+                new String[]{Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 PERMISSION_REQUEST_KEY);
     }
 

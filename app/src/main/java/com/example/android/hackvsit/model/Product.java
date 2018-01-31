@@ -8,6 +8,15 @@ public class Product implements Parcelable {
     private String mName,mImageUrl;
     private int mQuantity, mMaxQuantity, mPrice,mId;
     private Nutrition mNutrition;
+    private boolean mIsRecommended;
+
+    public boolean ismIsRecommended() {
+        return mIsRecommended;
+    }
+
+    public void setmIsRecommended(boolean mIsRecommended) {
+        this.mIsRecommended = mIsRecommended;
+    }
 
     public Product() {
     }

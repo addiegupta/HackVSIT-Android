@@ -16,7 +16,7 @@ public final class JSONUtils{
     private static final String PRODUCTS = "products";
     private static final String VEND_ID = "vendId";
     private static final String LOC_LAT = "locLat";
-    private static final String LOC_LANG = "locLang";
+    private static final String LOC_LANG = "locLong";
     private static final String PRODUCT_ID = "ID";
     private static final String NAME = "Name";
     private static final String NUTRITION_FACTS = "Nutrition Facts";
@@ -30,17 +30,29 @@ public final class JSONUtils{
     private static final String IRON = "Iron";
     private static final String PROTEIN = "Protein";
     private static final String PRICE = "Price";
+    private static final String REFER = "refer";
+    private static final String MACHINE = "machine";
 
 
     public static Machine getMachineDetails(String jsonResponse){
 
         Machine machine = new Machine();
         try{
-            JSONObject machineJson = new JSONObject(jsonResponse);
+            JSONObject parentJson = new JSONObject(jsonResponse);
+            JSONObject machineJson = parentJson.getJSONObject(MACHINE);
+
             machine.setmId(machineJson.getString(ID));
             machine.setmVendorId(machineJson.getString(VEND_ID));
             machine.setmLat(machineJson.getString(LOC_LAT));
             machine.setmLong(machineJson.getString(LOC_LANG));
+
+            JSONArray referJson = parentJson.getJSONArray(REFER);
+            ArrayList<String> recommendations = new ArrayList<>();
+            for(int i=0;i<referJson.length();i++){
+                String string = referJson.getString(i);
+                recommendations.add(string);
+            }
+            machine.setmRecommendations(recommendations);
 
             ArrayList<Product> mProducts = new ArrayList<>();
             JSONArray productsArray = machineJson.getJSONArray(PRODUCTS);

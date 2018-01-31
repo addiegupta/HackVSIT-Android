@@ -18,4 +18,6 @@
     <string name="proceed_to_pay">Proceed to Pay</string>
     <string name="delete_confirm">Remove from Cart?</string>
     <string name="scan_qr">Scan the QR Code of a nearby Vending Machine</string>
+    <string name="computer_vision">Identify objects using Computer Vision. Press the shutter button to capture an image and identify objects.</string>
+    <string name="processing">Processing</string>
 </resources>

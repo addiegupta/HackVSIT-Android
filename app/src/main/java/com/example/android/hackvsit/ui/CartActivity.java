@@ -174,14 +174,17 @@ public class CartActivity extends AppCompatActivity implements FingerprintDialog
 
 
     @Override
-    public void setupMachine(Machine machine) {
+    public void returnResponse(String string) {
 
     }
 
     @Override
-    public void launchPayPortal() {
+    public void launchPayPortal(String price,String time) {
         mLoadingIndicator.setVisibility(GONE);
-        startActivity(new Intent(CartActivity.this,PayActivity.class));
+        Intent intent =new Intent(CartActivity.this,PayActivity.class);
+        intent.putExtra("price",price);
+        intent.putExtra("time",time);
+        startActivity(intent);
         finish();
     }
 }

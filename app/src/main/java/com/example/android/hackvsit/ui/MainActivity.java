@@ -2,10 +2,12 @@ package com.example.android.hackvsit.ui;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.android.hackvsit.R;
 import com.example.android.hackvsit.model.Machine;
+import com.example.android.hackvsit.utils.JSONUtils;
 import com.example.android.hackvsit.utils.QueryUtils;
 import com.example.android.hackvsit.utils.Tools;
 import com.google.android.gms.vision.CameraSource;
@@ -45,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements QueryUtils.QueryU
     ProgressBar mLoadingIndicator;
     @BindView(R.id.camera_view)
     SurfaceView mCameraView;
+    @BindView(R.id.fab_capture_link)
+    FloatingActionButton mCaptureFab;
     private String MACHINE = "machine";
 
     @Override
@@ -108,6 +113,20 @@ public class MainActivity extends AppCompatActivity implements QueryUtils.QueryU
                                   }
                               }
                 );
+
+        mCaptureFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,CaptureActivity.class));
+            }
+        });
+        mCaptureFab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Tools.toast(MainActivity.this,"Identify Products using Smart Vision");
+                return true;
+            }
+        });
     }
 
 
@@ -142,15 +161,34 @@ public class MainActivity extends AppCompatActivity implements QueryUtils.QueryU
     }
 
     @Override
-    public void setupMachine(Machine machine) {
-        Intent intent = new Intent(MainActivity.this, MachineActivity.class);
-        intent.putExtra(MACHINE, machine);
-        startActivity(intent);
-        finish();
+    public void returnResponse(String response) {
+        new JSONTask().execute(response);
     }
 
     @Override
-    public void launchPayPortal() {
+    public void launchPayPortal(String price, String time) {
 
     }
+
+    private class JSONTask extends AsyncTask<String ,Void,Machine>{
+
+        @Override
+        protected Machine doInBackground(String... strings) {
+
+            return JSONUtils.getMachineDetails(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Machine machine) {
+            super.onPostExecute(machine);
+
+            Intent intent = new Intent(MainActivity.this, MachineActivity.class);
+            intent.putExtra(MACHINE, machine);
+            startActivity(intent);
+            finish();
+
+        }
+    }
+
+
 }

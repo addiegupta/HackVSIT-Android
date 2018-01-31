@@ -3,6 +3,8 @@
     package="com.example.android.hackvsit">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
@@ -36,7 +38,8 @@
                 android:value="com.example.android.hackvsit.ui.ProductActivity" />
         </activity>
         <activity android:name=".ui.CartActivity" />
-        <activity android:name=".ui.PayActivity"></activity>
+        <activity android:name=".ui.PayActivity" />
+        <activity android:name=".ui.CaptureActivity"></activity>
     </application>
 
 </manifest>

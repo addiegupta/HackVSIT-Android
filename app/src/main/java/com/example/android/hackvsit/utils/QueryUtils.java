@@ -8,7 +8,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.android.hackvsit.model.Machine;
 
 import org.json.JSONObject;
 
@@ -22,33 +21,8 @@ public final class QueryUtils {
     private static QueryUtilsCallback mCallback;
     public static final String BASE_URL = "http://192.168.136.210:3000/api/getData";
     public static final String BASE_PAY_URL = "http://192.168.136.210:3000/api/transaction/";
+    public static final String BASE_IMG_URL = "http://192.168.136.217:5000/getImage/?q=\"";
 
-
-    public static RequestQueue addVolleyHttpRequest(RequestQueue queue, boolean isGetRequest,
-                                                    String volleyUrl, String id) {
-        int requestMethod;
-        if (isGetRequest) {
-            requestMethod = Request.Method.GET;
-        } else {
-            requestMethod = Request.Method.POST;
-        }
-        StringRequest request = new StringRequest(requestMethod, volleyUrl,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d(QueryUtils.class.getSimpleName(), response);
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(QueryUtils.class.getSimpleName(), error.toString());
-            }
-        });
-// Add the request to the RequestQueue.
-        queue.add(request);
-        return queue;
-    }
 
     public static RequestQueue fetchMachineData(RequestQueue queue, final String id, QueryUtilsCallback callback) {
         mCallback = callback;
@@ -57,8 +31,7 @@ public final class QueryUtils {
                     @Override
                     public void onResponse(String response) {
                         Log.d(QueryUtils.class.getSimpleName(), response);
-                        mCallback.setupMachine(
-                                JSONUtils.getMachineDetails(response));
+                        mCallback.returnResponse(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -76,6 +49,24 @@ public final class QueryUtils {
         queue.add(request);
         return queue;
     }
+    public static RequestQueue sendImageData(RequestQueue queue, final String image, QueryUtilsCallback callback) {
+        mCallback = callback;
+        StringRequest request = new StringRequest(Request.Method.GET, BASE_IMG_URL+image+"\"",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(QueryUtils.class.getSimpleName(), response);
+                        mCallback.returnResponse(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(QueryUtils.class.getSimpleName(), error.toString());
+            }
+        });
+        queue.add(request);
+        return queue;
+    }
     public static RequestQueue makePayment(RequestQueue queue, final String vendId, final JSONObject object,
                                            QueryUtilsCallback callback){
         mCallback = callback;
@@ -85,7 +76,15 @@ public final class QueryUtils {
                     @Override
                     public void onResponse(String response) {
                         Log.d(QueryUtils.class.getSimpleName(), response);
-                        mCallback.launchPayPortal();
+                        try{
+
+                            JSONObject parent = new JSONObject(response);
+                            String price = parent.getString("price");
+                            String time = parent.getString("time");
+                            mCallback.launchPayPortal(price,time);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
 
                     }
                 }, new Response.ErrorListener() {
@@ -106,8 +105,8 @@ public final class QueryUtils {
     }
 
     public interface QueryUtilsCallback {
-        void setupMachine(Machine machine);
-        void launchPayPortal();
+        void returnResponse(String response);
+        void launchPayPortal(String price,String time);
     }
 
 }

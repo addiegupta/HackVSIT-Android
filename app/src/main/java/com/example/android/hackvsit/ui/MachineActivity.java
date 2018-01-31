@@ -19,7 +19,6 @@ import com.example.android.hackvsit.model.Product;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class MachineActivity extends AppCompatActivity implements ProductAdapter.OnClickHandler {
 
@@ -42,10 +41,18 @@ public class MachineActivity extends AppCompatActivity implements ProductAdapter
 
         Intent startingIntent = getIntent();
         mMachine = startingIntent.getParcelableExtra(MACHINE);
-        Timber.d(mMachine.getmVendorId() + mMachine.getmProducts().get(0).getmName());
 
         mAdapter = new ProductAdapter(this,this);
         mRecyclerView.setAdapter(mAdapter);
+
+        for(Product product:mMachine.getmProducts()){
+            if (mMachine.getmRecommendations().contains(product.getmName())){
+                product.setmIsRecommended(true);
+            }
+            else{
+                product.setmIsRecommended(false);
+            }
+        }
 
         mAdapter.setListData(mMachine.getmProducts());
 

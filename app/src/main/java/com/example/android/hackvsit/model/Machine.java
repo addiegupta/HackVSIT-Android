@@ -11,6 +11,16 @@ public class Machine implements Parcelable {
     private String mId,mLat,mLong,mVendorId;
     private ArrayList<Product> mProducts;
 
+    public ArrayList<String> getmRecommendations() {
+        return mRecommendations;
+    }
+
+    public void setmRecommendations(ArrayList<String> mRecommendations) {
+        this.mRecommendations = mRecommendations;
+    }
+
+    private ArrayList<String> mRecommendations;
+
     public Machine() {
     }
 
@@ -73,7 +83,8 @@ public class Machine implements Parcelable {
         dest.writeString(this.mLat);
         dest.writeString(this.mLong);
         dest.writeString(this.mVendorId);
-        dest.writeList(this.mProducts);
+        dest.writeTypedList(this.mProducts);
+        dest.writeStringList(this.mRecommendations);
     }
 
     protected Machine(Parcel in) {
@@ -81,11 +92,11 @@ public class Machine implements Parcelable {
         this.mLat = in.readString();
         this.mLong = in.readString();
         this.mVendorId = in.readString();
-        this.mProducts = new ArrayList<Product>();
-        in.readList(this.mProducts, Product.class.getClassLoader());
+        this.mProducts = in.createTypedArrayList(Product.CREATOR);
+        this.mRecommendations = in.createStringArrayList();
     }
 
-    public static final Parcelable.Creator<Machine> CREATOR = new Parcelable.Creator<Machine>() {
+    public static final Creator<Machine> CREATOR = new Creator<Machine>() {
         @Override
         public Machine createFromParcel(Parcel source) {
             return new Machine(source);
