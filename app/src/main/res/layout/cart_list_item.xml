@@ -10,7 +10,7 @@
     android:layout_marginRight="2dp"
     android:layout_marginTop="4dp"
     cardView:cardCornerRadius="4dp"
-    cardView:cardElevation="2dp">
+    cardView:cardElevation="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,16 +22,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/button_cart_quantity_minus"
             android:layout_toStartOf="@+id/button_cart_quantity_plus"
+            android:layout_toEndOf="@+id/button_cart_quantity_minus"
             android:gravity="center_horizontal"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-            android:textSize="14sp"
+            android:textSize="18sp"
             tools:text="5" />
 
         <TextView
             android:id="@+id/tv_cart_name"
-            android:layout_width="120dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="fill"
             android:layout_marginStart="13dp"
@@ -69,33 +69,34 @@
             android:id="@+id/button_cart_quantity_plus"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="40dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
             android:text="+"
             android:textColor="@color/colorAccent"
-            android:textSize="12sp" />
+            android:textSize="24sp" />
+
         <ImageButton
             android:id="@+id/button_cart_delete"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:src="@drawable/ic_clear_black_24dp"
-            android:textSize="12sp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/button_cart_quantity_minus"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="40dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@+id/tv_cart_name"
             android:text="-"
             android:textColor="@color/colorAccent"
-            android:textSize="14sp" />
+            android:textSize="26sp" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

@@ -45,13 +45,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         try {
             Product currentProduct = mProductsList.get(position);
             name = currentProduct.getmName();
-            price = String.valueOf(currentProduct.getmPrice());
-            quantity = String.valueOf(currentProduct.getmQuantity());
+            price = "\u20B9 " + String.valueOf(currentProduct.getmPrice());
             imageUrl = currentProduct.getmImageUrl();
 
             holder.mNameTextView.setText(name);
             holder.mPriceTextView.setText(price);
-            holder.mQuantityTextView.setText(quantity);
             if (!imageUrl.isEmpty()) {
 
                 RequestOptions options = new RequestOptions()
@@ -90,12 +88,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
-        @BindView(R.id.tv_nutrition_label)
+        @BindView(R.id.tv_product_name)
         TextView mNameTextView;
         @BindView(R.id.tv_product_price)
         TextView mPriceTextView;
-        @BindView(R.id.tv_product_quantity)
-        TextView mQuantityTextView;
         @BindView(R.id.iv_product_image)
         ImageView mProductImageView;
 

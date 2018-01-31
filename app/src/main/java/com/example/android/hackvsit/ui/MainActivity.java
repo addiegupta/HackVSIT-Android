@@ -58,8 +58,7 @@ public class MainActivity extends AppCompatActivity implements QueryUtils.QueryU
         BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE).build();
 
-        mCameraSource = new CameraSource.Builder(this, barcodeDetector)
-                .setRequestedPreviewSize(640, 480).build();
+        mCameraSource = new CameraSource.Builder(this, barcodeDetector).build();
 
         mCameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -146,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements QueryUtils.QueryU
     public void setupMachine(Machine machine) {
         Intent intent = new Intent(MainActivity.this, MachineActivity.class);
         intent.putExtra(MACHINE, machine);
-        mLoadingIndicator.setVisibility(GONE);
         startActivity(intent);
         finish();
     }

@@ -1,33 +1,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
+
     <TextView
+        android:id="@+id/tv_scan_qr_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_margin="8dp"
-        android:textAppearance="@style/Base.Widget.AppCompat.ActionBar.Solid"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:id="@+id/tv_scan_qr_label"
         android:layout_alignParentTop="true"
-        android:text="@string/scan_qr"/>
+        android:layout_margin="8dp"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
+        android:text="@string/scan_qr"
+        android:textAppearance="@style/Base.Widget.AppCompat.ActionBar.Solid"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-    <SurfaceView
-        android:id="@+id/camera_view"
-        android:layout_width="360dp"
+    <FrameLayout
+        android:layout_width="320dp"
+        android:layout_height="320dp"
         android:layout_below="@+id/tv_scan_qr_label"
-        android:layout_height="360dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="64dp"
+            android:src="@drawable/ic_check_black_24dp"/>
+
+        <SurfaceView
+            android:id="@+id/camera_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
 
     <ProgressBar
         android:id="@+id/pb_main"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:layout_marginBottom="16dp"
-        android:visibility="gone"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone" />
 
 </RelativeLayout>
