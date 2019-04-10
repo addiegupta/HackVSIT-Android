@@ -11,3 +11,6 @@ Accompanying code
 https://github.com/pratyush1687/hackvsit
 
 https://github.com/edidamanish/VendingMachine
+
+Demonstration video
+https://drive.google.com/file/d/1LdOLPZ1JKLNlndbafaywBmCxKbH2Vn3g/view?usp=sharing
